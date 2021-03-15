@@ -32,10 +32,10 @@ exports.studentByID = function (req, res, next, id) {
 exports.authenticate = function (req, res, next) {
     // Get credentials from request
     console.log(req.body);
-    const studentNumber = req.body.studentNumber;
-    const password = req.body.password;
-    // const studentNumber = req.body.auth.studentNumber;
-    // const password = req.body.auth.password;
+    // const studentNumber = req.body.studentNumber;
+    // const password = req.body.password;
+    const studentNumber = req.body.auth.studentNumber;
+    const password = req.body.auth.password;
     console.log(studentNumber);
     console.log(password);
 
