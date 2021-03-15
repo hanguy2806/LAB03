@@ -23,5 +23,6 @@ module.exports = function (app) {
 
     // handle a get request made to /students path
     // and list students when /students link is selected
-    app.get('/students', students.requiresLogin, students.listStudents); //go to http://localhost:5000/students to see the list
+    // app.get('/students', students.requiresLogin, students.listStudents);
+    app.get('/students', students.listStudents);
 };

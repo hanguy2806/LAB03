@@ -18,6 +18,7 @@ import './App.css';
 import Home from './components/Home';
 import Login from './components/Login';
 import Signup from './components/Signup';
+import ListStudents from './components/ListStudents';
 //
 function App() {
     return (
@@ -29,8 +30,7 @@ function App() {
                         <Nav.Link href='/home'>Home</Nav.Link>
                         <Nav.Link href='/login'>Login</Nav.Link>
                         <Nav.Link href='/signup'>Sign up</Nav.Link>
-                        {/* <Nav.Link href="/list">List of Users</Nav.Link> */}
-                        {/* <Nav.Link href="/create">Add User</Nav.Link> */}
+                        <Nav.Link href='/listStudents'>List Students</Nav.Link>
                     </Navbar.Collapse>
                 </Navbar.Collapse>
             </Navbar>
@@ -42,7 +42,7 @@ function App() {
                 <Route render={() => <Home />} path='/home' />
                 <Route render={() => <Login />} path='/login' />
                 <Route render={() => <Signup />} path='/signup' />
-                {/* <Route render ={()=> < List />} path="/list" /> */}
+                <Route render ={()=> < ListStudents />} path="/listStudents" />
                 {/* <Route render ={()=> < Edit />} path="/edit/:id" /> */}
                 {/* <Route render ={()=> < Create />} path="/create" /> */}
                 {/* <Route render ={()=> < Show />} path="/show/:id" /> */}
