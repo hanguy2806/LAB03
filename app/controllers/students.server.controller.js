@@ -32,16 +32,19 @@ exports.studentByID = function (req, res, next, id) {
 exports.authenticate = function (req, res, next) {
     // Get credentials from request
     console.log(req.body);
-    const studentNumber = req.body.auth.studentNumber;
-    const password = req.body.auth.password;
+    const studentNumber = req.body.studentNumber;
+    const password = req.body.password;
+    // const studentNumber = req.body.auth.studentNumber;
+    // const password = req.body.auth.password;
     console.log(studentNumber);
     console.log(password);
 
     // find the student with given studentNumber using static method findOne
-    Student.findOne({ studentNumber: studentNumber }, (err, student) => {
+    Student.findOne({ studentNumber:studentNumber }, (err, student) => {
         if (err) {
             return next(err);
         } else {
+            
             console.log(student);
             // compare passwords
             if (bcrypt.compareSync(password, student.password)) {
@@ -59,7 +62,7 @@ exports.authenticate = function (req, res, next) {
                     maxAge: jwtExpirySeconds * 1000,
                     httpOnly: true,
                 });
-                res.status(200).send({ screen: student.studentNumber });
+                res.status(200).send({ screen: student.studentNumber , token: token});
                 //
                 //res.json({status:"success", message: "student found!!!", data:{student:
                 //student, token:token}});
