@@ -30,14 +30,8 @@ var StudentSchema = new Schema({
         // Validate the email format
         match: [/.+\@.+\..+/, 'Please fill a valid email address'],
     },
-    program: String,
-    courses: [
-        {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'Course',
-        },
-    ],
-});
+    program: String
+   });
 
 // Set the 'fullname' virtual property
 StudentSchema.virtual('fullName')
