@@ -8,12 +8,10 @@ module.exports = function (app) {
       
         app.route('/api/courses/:courseId')
             .get(courses.read)
-            .put(students.requiresLogin, courses.update)
-            .delete(students.requiresLogin, courses.delete);
+            .put(students.requiresLogin, courses.hasAuthorization, courses.update)
+            .delete(students.requiresLogin, courses.hasAuthorization, courses.delete);
 
-        app.get('/api/students/course/:courseId', courses.findStudentsByCourseId);
-
-        app.get('/api/courses/student/:studentId', courses.findCoursesByStudentId);
+//       app.get('/api/courses/student/:studentNumber', courses.findCoursesByStudentNumber);
       
         app.param('courseId', courses.courseByID);
 };

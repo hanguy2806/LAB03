@@ -18,11 +18,10 @@ const CourseSchema = new Schema({
         trim: true
     },
     semester:String,
-    students: [
-        {
-          type: mongoose.Schema.Types.ObjectId,
-          ref: "Student"
-        }
-      ]
+    creator: {
+        type: Schema.ObjectId,
+        ref: 'Student'
+    }
+    
 });
 mongoose.model('Course', CourseSchema);

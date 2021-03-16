@@ -1,8 +1,4 @@
 import React, { useState, useEffect } from 'react';
-//import ReactDOM from 'react-dom';
-import Jumbotron from 'react-bootstrap/Jumbotron';
-import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
 import axios from 'axios';
 //
 import View from './View';
