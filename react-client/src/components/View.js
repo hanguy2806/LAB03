@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
-
-import ListCourses from './ListCourses';
+import Button from 'react-bootstrap/Button';
+// import ListCourses from './ListCourses';
 import CreateCourse from './CreateCourse';
 import CoursesByStudentID from "./CoursesByStudentID";
 function View(props) {
@@ -42,10 +42,10 @@ function View(props) {
           default:
             return (
               <div>
-                <p>Student Number: {screen}</p>
-                <button onClick={addCourse}>Add Course</button>
-                <button onClick={listCourses}>List Course</button>
-                <button onClick={deleteCookie}>Log out</button>
+                <h2>Student Number: {screen}</h2><br /><br />
+                <Button variant="success" type="submit" onClick={addCourse}>Add Course</Button> <br /><br />
+                <Button className="mx-3" variant="primary" type="submit" onClick={listCourses}>List Courses By Student</Button> <br /><br />
+                <Button variant="warning" type="submit" onClick={deleteCookie}>Log Out</Button>
               </div>
             );
         }

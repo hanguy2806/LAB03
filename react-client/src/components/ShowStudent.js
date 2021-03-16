@@ -68,11 +68,11 @@ function ShowStudent(props) {
                 <p>
                     <Button
                         type='button'
-                        variant='primary'
+                        variant='warning'
                         onClick={() => {
                             editStudent(data._id);
                         }}>
-                        Edit
+                        Edit Student
                     </Button>
                     &nbsp;
                     <Button
@@ -81,7 +81,7 @@ function ShowStudent(props) {
                         onClick={() => {
                             deleteStudent(data._id);
                         }}>
-                        Delete
+                        Delete Student
                     </Button>
                 </p>
             </Jumbotron>

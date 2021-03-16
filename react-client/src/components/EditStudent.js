@@ -173,8 +173,8 @@ function EditStudent(props) {
                         />
                     </Form.Group> */}
 
-                    <Button variant='primary' type='submit'>
-                        Update
+                    <Button variant='warning' type='submit'>
+                        Update Student
                     </Button>
                 </Form>
             </Jumbotron>

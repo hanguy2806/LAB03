@@ -30,7 +30,7 @@ function App() {
             <Nav.Link href="/login">Login</Nav.Link>
             <Nav.Link href="/signup">Sign up</Nav.Link>
             <Nav.Link href="/listStudents">List Students</Nav.Link>
-            <Nav.Link href="/listcourses">List Courses</Nav.Link>
+            <Nav.Link href="/listcourses">List All Courses</Nav.Link>
           </Navbar.Collapse>
         </Navbar.Collapse>
       </Navbar>

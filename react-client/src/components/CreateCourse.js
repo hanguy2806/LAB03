@@ -60,7 +60,7 @@ function CreateCourse(props) {
                 <Form.Label> Semester</Form.Label>
                 <Form.Control type="text" name="semester" id="semester" placeholder="Enter semester" value={course.semester} onChange={onChange} />
               </Form.Group>          
-              <Button variant="primary" type="submit">
+              <Button variant="success" type="submit">
                 Save Course
               </Button>
             </Form>

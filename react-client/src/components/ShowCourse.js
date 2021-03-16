@@ -52,8 +52,8 @@ function ShowCourse(props) {
         <p>Section {data.section} Semester {data.semester}</p>
 
         <p>
-          <Button type="button" variant="primary" onClick={() => { editCourse(data._id) }}>Edit</Button>&nbsp;
-          <Button type="button" variant="danger" onClick={() => { deleteCourse(data._id) }}>Delete</Button>
+          <Button type="button" variant="warning" onClick={() => { editCourse(data._id) }}>Edit Course</Button>&nbsp;
+          <Button type="button" variant="danger" onClick={() => { deleteCourse(data._id) }}>Delete Course</Button>
         </p>
       </Jumbotron>
     </div>
