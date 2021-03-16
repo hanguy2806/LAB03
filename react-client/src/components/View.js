@@ -3,6 +3,7 @@ import axios from "axios";
 
 import ListCourses from './ListCourses';
 import CreateCourse from './CreateCourse';
+import CoursesByStudentID from "./CoursesByStudentID";
 function View(props) {
   // read the info from props, coming from the ancestor component
   const { screen, setScreen } = props;
@@ -37,7 +38,7 @@ function View(props) {
           case "y":
             return <CreateCourse screen={screen} setScreen={screen} />;
           case "n":
-            return <ListCourses screen={screen} setScreen={screen} />;
+            return <CoursesByStudentID screen={screen} setScreen={screen} />;
           default:
             return (
               <div>
