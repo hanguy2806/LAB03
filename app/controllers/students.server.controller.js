@@ -40,11 +40,10 @@ exports.authenticate = function (req, res, next) {
     console.log(password);
 
     // find the student with given studentNumber using static method findOne
-    Student.findOne({ studentNumber:studentNumber }, (err, student) => {
+    Student.findOne({ studentNumber: studentNumber }, (err, student) => {
         if (err) {
             return next(err);
         } else {
-            
             console.log(student);
             // compare passwords
             if (bcrypt.compareSync(password, student.password)) {
@@ -62,7 +61,10 @@ exports.authenticate = function (req, res, next) {
                     maxAge: jwtExpirySeconds * 1000,
                     httpOnly: true,
                 });
-                res.status(200).send({ screen: student.studentNumber , token: token});
+                res.status(200).send({
+                    screen: student.studentNumber,
+                    token: token,
+                });
                 //
                 //res.json({status:"success", message: "student found!!!", data:{student:
                 //student, token:token}});
@@ -180,4 +182,38 @@ exports.listStudents = function (req, res, next) {
             res.json(students);
         }
     });
+};
+
+//'read' controller method to display a student
+exports.read = function (req, res) {
+    // Use the 'response' object to send a JSON response
+    res.json(req.student);
+};
+
+//update a student by id
+exports.update = function (req, res, next) {
+    console.log(req.body);
+    Student.findByIdAndUpdate(
+        req.student.id,
+        req.body,
+        function (err, student) {
+            if (err) {
+                console.log(err);
+                return next(err);
+            }
+            res.json(student);
+        }
+    );
+};
+
+// delete a student by id
+exports.delete = function (req, res, next) {
+    Student.findByIdAndRemove(
+        req.student.id,
+        req.body,
+        function (err, student) {
+            if (err) return next(err);
+            res.json(student);
+        }
+    );
 };

@@ -25,4 +25,11 @@ module.exports = function (app) {
     // and list students when /students link is selected
     // app.get('/students', students.requiresLogin, students.listStudents);
     app.get('/students', students.listStudents);
+
+    // Set up the 'students' parameterized routes
+    app.route('/students/:studentId')
+        .get(students.read)
+        .put(students.update)
+        .delete(students.delete);
 };
+
