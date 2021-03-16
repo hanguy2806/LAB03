@@ -12,7 +12,7 @@ module.exports = function (app) {
             .delete(students.requiresLogin, courses.hasAuthorization, courses.delete);
 
        app.route('/api/courses/student/:studentNumber')
-            .get(students.requiresLogin, courses.hasAuthorization,courses.findCoursesByStudentNumber);
+            .get(courses.findCoursesByStudentNumber);
       
         app.param('courseId', courses.courseByID);
 };
