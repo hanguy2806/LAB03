@@ -6,28 +6,41 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { withRouter } from 'react-router-dom';
 
-function Signup(props) {
+function EditStudent(props) {
     const [student, setStudent] = useState({
         _id: '',
         studentNumber: '',
-        password: '',
+        // password: '',
         firstName: '',
         lastName: '',
         address: '',
         city: '',
         phoneNumber: '',
         email: '',
-        program: ''
+        program: '',
     });
-    const [showLoading, setShowLoading] = useState(false);
-    const apiUrl = 'http://localhost:3000/';
+    const [showLoading, setShowLoading] = useState(true);
+    const apiUrl = 'http://localhost:3000/students/' + props.match.params.id;
+    //runs only once after the first render
+    useEffect(() => {
+        setShowLoading(false);
+        //call api
+        const fetchData = async () => {
+            const result = await axios(apiUrl);
+            setStudent(result.data);
+            console.log(result.data);
+            setShowLoading(false);
+        };
 
-    const saveStudent = (e) => {
+        fetchData();
+    }, []);
+
+    const updateStudent = (e) => {
         setShowLoading(true);
         e.preventDefault();
         const data = {
             studentNumber: student.studentNumber,
-            password: student.password,
+            // password: student.password,
             firstName: student.firstName,
             lastName: student.lastName,
             address: student.address,
@@ -37,14 +50,14 @@ function Signup(props) {
             program: student.program,
         };
         axios
-            .post(apiUrl, data)
+            .put(apiUrl, data)
             .then((result) => {
                 setShowLoading(false);
-                props.history.push('/showStudent/' + result.data._id); // ********* ?????
+                props.history.push('/showStudent/' + result.data._id);
             })
             .catch((error) => setShowLoading(false));
     };
-
+    //runs when student enters a field
     const onChange = (e) => {
         e.persist();
         setStudent({ ...student, [e.target.name]: e.target.value });
@@ -58,7 +71,7 @@ function Signup(props) {
                 </Spinner>
             )}
             <Jumbotron>
-                <Form onSubmit={saveStudent}>
+                <Form onSubmit={updateStudent}>
                     <Form.Group>
                         <Form.Label> Student Number</Form.Label>
                         <Form.Control
@@ -148,7 +161,7 @@ function Signup(props) {
                             onChange={onChange}
                         />
                     </Form.Group>
-                    <Form.Group>
+                    {/* <Form.Group>
                         <Form.Label> Password</Form.Label>
                         <Form.Control
                             type='password'
@@ -158,10 +171,10 @@ function Signup(props) {
                             value={student.password}
                             onChange={onChange}
                         />
-                    </Form.Group>
+                    </Form.Group> */}
 
                     <Button variant='primary' type='submit'>
-                        Save
+                        Update
                     </Button>
                 </Form>
             </Jumbotron>
@@ -169,4 +182,4 @@ function Signup(props) {
     );
 }
 
-export default withRouter(Signup);
+export default withRouter(EditStudent);

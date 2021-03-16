@@ -11,14 +11,12 @@ import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
 import './App.css';
 //
-// import List from './components/List';
-// import Edit from './components/Edit';
-// import Create from './components/Create';
-// import Show from './components/Show';
 import Home from './components/Home';
 import Login from './components/Login';
 import Signup from './components/Signup';
 import ListStudents from './components/ListStudents';
+import ShowStudent from './components/ShowStudent';
+import EditStudent from './components/EditStudent';
 //
 function App() {
     return (
@@ -42,14 +40,12 @@ function App() {
                 <Route render={() => <Home />} path='/home' />
                 <Route render={() => <Login />} path='/login' />
                 <Route render={() => <Signup />} path='/signup' />
-                <Route render ={()=> < ListStudents />} path="/listStudents" />
-                {/* <Route render ={()=> < Edit />} path="/edit/:id" /> */}
-                {/* <Route render ={()=> < Create />} path="/create" /> */}
-                {/* <Route render ={()=> < Show />} path="/show/:id" /> */}
+                <Route render={() => <ListStudents />} path='/listStudents' />
+                <Route render={() => <EditStudent />} path='/editStudent/:id' />
+                <Route render={() => <ShowStudent />} path='/showStudent/:id' />
             </div>
         </Router>
     );
 }
 
-//<Route render ={()=> < App />} path="/" />
 export default App;

@@ -19,11 +19,11 @@ function ListStudents(props) {
         fetchData();
     }, []);
 
-    // const showDetail = (id) => {
-    //     props.history.push({
-    //         pathname: '/show/' + id,
-    //     });
-    // };
+    const showStudentDetails = (id) => {
+        props.history.push({
+            pathname: '/showStudent/' + id,
+        });
+    };
 
     return (
         <div>
@@ -36,11 +36,10 @@ function ListStudents(props) {
                 {data.map((item, idx) => (
                     <ListGroup.Item
                         key={idx}
-                        // action
-                        // onClick={() => {
-                        // showDetail(item._id);
-                        // }}
-                    >
+                        action
+                        onClick={() => {
+                            showStudentDetails(item._id);
+                        }}>
                         {item.fullName} ({item.studentNumber})
                     </ListGroup.Item>
                 ))}
