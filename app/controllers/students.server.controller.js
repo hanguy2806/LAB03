@@ -44,6 +44,19 @@ exports.authenticate = function (req, res, next) {
         if (err) {
             return next(err);
         } else {
+            
+            // findOne returns null if no results:
+            if(!student){
+                console.log(`!!! Student number invalid !!!`);
+                res.json({
+                    status: 'error',
+                    message: 'Invalid Student Number',
+                    data: null,
+                });
+                return next();
+            }
+
+            // student found:
             console.log(student);
             // compare passwords
             if (bcrypt.compareSync(password, student.password)) {
@@ -73,9 +86,10 @@ exports.authenticate = function (req, res, next) {
                 //call the next middleware
                 next();
             } else {
+                console.log('!!! Password incorrect !!!');
                 res.json({
                     status: 'error',
-                    message: 'Invalid studentNumber/password!!!',
+                    message: 'Invalid Password',
                     data: null,
                 });
             }

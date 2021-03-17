@@ -5,6 +5,9 @@ import View from './View';
 function App() {
     //state variable for the screen, admin or user
     const [screen, setScreen] = useState('auth');
+    // handling invalid student number/ password
+    const [error, setError] = useState('');
+    const [errorMessage, setErrorMessage] = useState('');
     //store input field data, user name and password
     const [studentNumber, setStudentNumber] = useState();
     const [password, setPassword] = useState();
@@ -26,6 +29,13 @@ function App() {
                 setScreen(res.data.screen);
                 console.log(res.data.screen);
             }
+            else{
+                // handle invalid student number/ password
+                setError(res.data.status);
+                setErrorMessage(res.data.message);
+            }
+
+            
         } catch (e) {
             //print the error
             console.log(e);
@@ -72,6 +82,10 @@ function App() {
                     />
                     <br />
                     <button onClick={auth}>Login</button>
+                    {error === 'error' ? <h6>Please try again, {errorMessage}.</h6>
+                    :
+                    <div></div>
+                    }
                 </div>
             ) : (
                 <View screen={screen} setScreen={setScreen} />
