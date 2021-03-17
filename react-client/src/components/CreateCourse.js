@@ -12,6 +12,7 @@ function CreateCourse(props) {
     console.log('props.screen',props.screen)
     const [course, setCourse] = useState({ _id: '', courseCode: '', courseName: '', section: '', semester:'',studentNumber: ''});
     const [showLoading, setShowLoading] = useState(false);
+    const [error, setError] = useState('');
     //
     const apiUrl = "http://localhost:3000/api/courses"
     //
@@ -26,7 +27,10 @@ function CreateCourse(props) {
             console.log('results from save course:',result.data)
             props.history.push('/showcourse/' + result.data._id)
 
-        }).catch((error) => setShowLoading(false));
+        }).catch((error) => {
+          setError('Please try again, saving course failed.');
+          setShowLoading(false);
+        });
     };
     //
     const onChange = (e) => {
@@ -63,6 +67,7 @@ function CreateCourse(props) {
               <Button variant="success" type="submit">
                 Save Course
               </Button>
+              {error ? <h6>{error}</h6> : <h6></h6>}
             </Form>
           </Jumbotron>
         </div>

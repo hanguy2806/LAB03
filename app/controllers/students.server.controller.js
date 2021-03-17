@@ -44,9 +44,8 @@ exports.authenticate = function (req, res, next) {
         if (err) {
             return next(err);
         } else {
-            
             // findOne returns null if no results:
-            if(!student){
+            if (!student) {
                 console.log(`!!! Student number invalid !!!`);
                 res.json({
                     status: 'error',
@@ -177,7 +176,6 @@ exports.create = function (req, res, next) {
     // Use the 'Student' instance's 'save' method to save a new student document
     student.save(function (err) {
         if (err) {
-            // Call the next middleware with an error message
             return next(err);
         } else {
             // Use the 'response' object to send a JSON response
@@ -230,4 +228,15 @@ exports.delete = function (req, res, next) {
             res.json(student);
         }
     );
+};
+
+//The hasAuthorization() middleware uses the req.article and req.user objects
+//to verify that the current user is the creator of the current article
+exports.hasAuthorization = function (req, res, next) {
+    if (req.student.id !== req.id) {
+        return res.status(403).send({
+            message: 'Student is not authorized',
+        });
+    }
+    next();
 };

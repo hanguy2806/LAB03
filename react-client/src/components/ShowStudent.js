@@ -8,6 +8,7 @@ import { withRouter } from 'react-router-dom';
 function ShowStudent(props) {
     const [data, setData] = useState({});
     const [showLoading, setShowLoading] = useState(true);
+    const [error, setError] = useState('');
     const apiUrl = 'http://localhost:3000/students/' + props.match.params.id;
 
     useEffect(() => {
@@ -41,9 +42,30 @@ function ShowStudent(props) {
             .delete(apiUrl, user)
             .then((result) => {
                 setShowLoading(false);
-                props.history.push('/listStudents');
+                if (result.data.screen === 'auth') {
+                    setError(
+                        'Delete failed: Deleting Requires Logging in as the profile owner'
+                    );
+                } else {
+                    props.history.push('/listStudents');
+                    deleteCookie();
+                }
             })
-            .catch((error) => setShowLoading(false));
+            .catch((error) => {
+                setError(
+                    'Delete failed: Only Student Profile owner can delete a student.'
+                );
+                setShowLoading(false);
+            });
+
+        // automatically signout student after delete profile
+        const deleteCookie = async () => {
+            try {
+                await axios.get('/signout');
+            } catch (e) {
+                console.log(e);
+            }
+        };
     };
 
     return (
@@ -84,6 +106,7 @@ function ShowStudent(props) {
                         Delete Student
                     </Button>
                 </p>
+                {error ? <h6>{error}</h6> : <h6></h6>}
             </Jumbotron>
         </div>
     );

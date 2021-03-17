@@ -10,7 +10,6 @@ function EditStudent(props) {
     const [student, setStudent] = useState({
         _id: '',
         studentNumber: '',
-        // password: '',
         firstName: '',
         lastName: '',
         address: '',
@@ -20,6 +19,7 @@ function EditStudent(props) {
         program: '',
     });
     const [showLoading, setShowLoading] = useState(true);
+    const [error, setError] = useState('');
     const apiUrl = 'http://localhost:3000/students/' + props.match.params.id;
     //runs only once after the first render
     useEffect(() => {
@@ -40,7 +40,6 @@ function EditStudent(props) {
         e.preventDefault();
         const data = {
             studentNumber: student.studentNumber,
-            // password: student.password,
             firstName: student.firstName,
             lastName: student.lastName,
             address: student.address,
@@ -53,9 +52,20 @@ function EditStudent(props) {
             .put(apiUrl, data)
             .then((result) => {
                 setShowLoading(false);
-                props.history.push('/showStudent/' + result.data._id);
+                if(result.data.screen === 'auth'){
+                    setError('Update failed: Updating Requires Logging in as the profile owner');
+                  }
+                  else{
+                      props.history.push('/showStudent/' + result.data._id);
+                  }
+                
             })
-            .catch((error) => setShowLoading(false));
+            .catch((error) => {
+                setError(
+                    'Update failed: Only Profile owner can update a student profile'
+                );
+                setShowLoading(false);
+            });
     };
     //runs when student enters a field
     const onChange = (e) => {
@@ -161,21 +171,10 @@ function EditStudent(props) {
                             onChange={onChange}
                         />
                     </Form.Group>
-                    {/* <Form.Group>
-                        <Form.Label> Password</Form.Label>
-                        <Form.Control
-                            type='password'
-                            name='password'
-                            id='password'
-                            placeholder='Enter Password'
-                            value={student.password}
-                            onChange={onChange}
-                        />
-                    </Form.Group> */}
-
                     <Button variant='warning' type='submit'>
                         Update Student
                     </Button>
+                    {error ? <h6>{error}</h6> : <h6></h6>}
                 </Form>
             </Jumbotron>
         </div>

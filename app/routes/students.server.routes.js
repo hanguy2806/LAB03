@@ -29,7 +29,7 @@ module.exports = function (app) {
     // Set up the 'students' parameterized routes
     app.route('/students/:studentId')
         .get(students.read)
-        .put(students.update)
-        .delete(students.delete);
+        .put(students.requiresLogin, students.hasAuthorization, students.update)
+        .delete(students.requiresLogin, students.hasAuthorization, students.delete);
 };
 

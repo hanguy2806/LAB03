@@ -9,6 +9,7 @@ function ShowCourse(props) {
   console.log('props.match.params',props.match.params.id)
   const [data, setData] = useState({});
   const [showLoading, setShowLoading] = useState(true);
+  const [error, setError] = useState('');
   const apiUrl = "http://localhost:3000/api/courses/" + props.match.params.id;
 
   useEffect(() => {
@@ -37,8 +38,16 @@ function ShowCourse(props) {
     axios.delete(apiUrl, course)
       .then((result) => {
         setShowLoading(false);
-        props.history.push('/listcourses')
-      }).catch((error) => setShowLoading(false));
+        if(result.data.screen === 'auth'){
+          setError('Delete failed: Deleting Requires Logging in as the course owner');
+        }else{
+          props.history.push('/listcourses');
+        }
+        
+      }).catch((error) => {
+        setError('Delete failed: Only Course owner can delete a course');
+        setShowLoading(false);
+      });
   };
 
   return (
@@ -47,14 +56,15 @@ function ShowCourse(props) {
         <span className="sr-only">Loading...</span>
       </Spinner> }    
       <Jumbotron>
-        <h1>Course code : {data.courseCode}</h1>
-        <p>Course name: {data.courseName}</p>
-        <p>Section {data.section} Semester {data.semester}</p>
+        <h1>Course Code: {data.courseCode}</h1>
+        <p>Course Name: {data.courseName}</p>
+        <p>Section: {data.section} Semester: {data.semester}</p>
 
         <p>
           <Button type="button" variant="warning" onClick={() => { editCourse(data._id) }}>Edit Course</Button>&nbsp;
           <Button type="button" variant="danger" onClick={() => { deleteCourse(data._id) }}>Delete Course</Button>
         </p>
+        {error ? <h6>{error}</h6> : <h6></h6>}
       </Jumbotron>
     </div>
   );

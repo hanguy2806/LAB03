@@ -21,6 +21,7 @@ function Signup(props) {
     });
     const [showLoading, setShowLoading] = useState(false);
     const apiUrl = 'http://localhost:3000/';
+    const [error, setError] = useState('');
 
     const saveStudent = (e) => {
         setShowLoading(true);
@@ -40,9 +41,12 @@ function Signup(props) {
             .post(apiUrl, data)
             .then((result) => {
                 setShowLoading(false);
-                props.history.push('/showStudent/' + result.data._id); // ********* ?????
+                props.history.push('/showStudent/' + result.data._id);
             })
-            .catch((error) => setShowLoading(false));
+            .catch((error) => {
+                setError('Please try again, sign up failed.');
+                setShowLoading(false);
+            });
     };
 
     const onChange = (e) => {
@@ -163,6 +167,7 @@ function Signup(props) {
                     <Button variant='primary' type='submit'>
                         Save
                     </Button>
+                    {error ? <h6>{error}</h6> : <h6></h6>}
                 </Form>
             </Jumbotron>
         </div>
