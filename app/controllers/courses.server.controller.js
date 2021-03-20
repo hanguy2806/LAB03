@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const coursesServerRoutes = require("../routes/courses.server.routes");
 const Course = mongoose.model("Course");
 const Student = mongoose.model("Student");
 
@@ -57,6 +58,8 @@ exports.list = function (req, res) {
 };
 
 exports.read = function (req, res) {
+  Course.findOne({_id: req.params.courseId}).populate('studentList');
+  //Student.findOnd({studentNumber: req.student.studentNumber}).populate('creator');
   res.status(200).json(req.course);
 };
 
@@ -109,7 +112,8 @@ exports.findCoursesByStudentNumber = function (req, res) {
       req.id = student._id;
       console.log(req.id);
     }
-  ).then(function(){
+  )
+  .then(function(){
       Course.find({creator: req.id}).exec(function(err,courses){
           if(err){
               if(err.kind === "ObjectId"){
@@ -121,6 +125,49 @@ exports.findCoursesByStudentNumber = function (req, res) {
       })
     }
   );
+};
+
+
+// exports.addStudentToACourse = function (req, res) {
+
+//   const course=req.course;
+//   console.log(course);
+//   Student.findOne({studentNumber: req.params.studentNumber},(err,student)=>{
+//     if(err) return getErrorMessage(err);
+//     req.student=student;
+//     console.log(student);
+//   }).then(function(){
+//     course.studentList.push(req.student);
+//     course.save((err,course)=>{
+//       if(err)  return res.status(400).send({
+//         message: getErrorMessage(err)
+//       });
+//       else{
+//         res.status(200).json(course);
+//       }
+//     });
+//   })
+// };
+
+exports.addStudentToACourse1 = function (req, res) {
+
+  const course=req.course;
+  console.log(course);
+  Student.findOne({_id: req.student._id},(err,student)=>{
+    if(err) return getErrorMessage(err);
+    req.student=student;
+    console.log(student);
+  }).then(function(){
+    course.studentList.push(req.student);
+    course.save((err,course)=>{
+      if(err)  return res.status(400).send({
+        message: getErrorMessage(err)
+      });
+      else{
+        res.status(200).json(course);
+      }
+    });
+  })
 };
 
 //The hasAuthorization() middleware uses the req.article and req.user objects
